@@ -56,7 +56,7 @@ export const EventDetailsPage: React.FC = () => {
     hero_photo_id: null as number | null,
     host_name: '',
   });
-  const [feedbackSettings, setFeedbackSettings] = useState<FeedbackSettingsType>({
+  const [editFeedbackSettings, setFeedbackSettings] = useState<FeedbackSettingsType>({
     feedback_enabled: false,
     allow_ratings: true,
     allow_likes: true,
@@ -91,7 +91,7 @@ export const EventDetailsPage: React.FC = () => {
   });
 
   // Fetch feedback settings
-  const { data: FeedbackSettings } = useQuery({
+  const { data: getFeedbackSettings } = useQuery({
     queryKey: ['admin-event-feedback-settings', id],
     queryFn: () => feedbackService.getEventFeedbackSettings(id!),
     enabled: !!id,
@@ -268,7 +268,7 @@ export const EventDetailsPage: React.FC = () => {
     
     // Update feedback settings separately
     try {
-      await feedbackService.updateEventFeedbackSettings(id!, feedbackSettings);
+      await feedbackService.updateEventFeedbackSettings(id!, editFeedbackSettings);
     } catch (error) {
       console.error('Failed to update feedback settings:', error);
     }
@@ -351,7 +351,7 @@ export const EventDetailsPage: React.FC = () => {
                     {t('common.edit')}
                   </Button>
                 )}
-                {feedbackSettings?.feedback_enabled && (
+                {getFeedbackSettings?.feedback_enabled && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -556,7 +556,7 @@ export const EventDetailsPage: React.FC = () => {
                 <div className="mt-4 pt-4 border-t border-neutral-200">
                   <h3 className="text-sm font-semibold text-neutral-900 mb-3">{t('feedback.settings', 'Feedback Settings')}</h3>
                   <FeedbackSettings
-                    settings={feedbackSettings}
+                    settings={getFeedbackSettings}
                     onChange={setFeedbackSettings}
                   />
                 </div>
@@ -831,7 +831,7 @@ export const EventDetailsPage: React.FC = () => {
           )}
 
           {/* Feedback Moderation Panel */}
-          {!event.is_archived && feedbackSettings?.feedback_enabled && (
+          {!event.is_archived && getFeedbackSettings?.feedback_enabled && (
             <FeedbackModerationPanel 
               eventId={parseInt(id!)} 
               compact={true}
