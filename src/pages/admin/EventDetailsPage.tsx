@@ -91,7 +91,7 @@ export const EventDetailsPage: React.FC = () => {
   });
 
   // Fetch feedback settings
-  const { data: eventFeedbackSettings } = useQuery({
+  const { data: FeedbackSettings } = useQuery({
     queryKey: ['admin-event-feedback-settings', id],
     queryFn: () => feedbackService.getEventFeedbackSettings(id!),
     enabled: !!id,
