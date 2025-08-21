@@ -62,8 +62,9 @@ export const EventDetailsPage: React.FC = () => {
     allow_likes: true,
     allow_comments: true,
     allow_favorites: true,
-    require_moderation: true,
-    show_public_stats: false
+    require_name_email: false,
+    moderate_comments: true,
+    show_feedback_to_guests: true
   });
   const [copiedLink, setCopiedLink] = useState(false);
   const [showPhotoUpload, setShowPhotoUpload] = useState(false);
